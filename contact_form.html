@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Форма для контакта</title>
+    <style>
+        .error {
+            color: red;
+            display: none;
+        }
+
+        .success {
+            color: green;
+            display: none;
+        }
+				#contactForm{
+					display: flex;
+					flex-direction: column;
+					width: 350px;
+				}
+				#contactForm *{ margin-top: 4px; }
+				button{
+					border: none;
+					background-color: lightgray;
+					padding-block: 6px;
+				}
+    </style>
+</head>
+<body>
+
+<h2>Contact Us</h2>
+
+<form id="contactForm" novalidate>
+
+    <label>Имя*</label><br>
+    <input type="text"
+           id="name"
+           name="name"
+           required
+           minlength="2">
+    <div id="nameError" class="error">
+        Поле имя должно иметь не менее двух символов
+    </div>
+    <br>
+
+    <label>Email*</label><br>
+    <input type="email"
+           id="email"
+           name="email"
+           required
+           pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$">
+    <div id="emailError" class="error">
+        Пожалуйста введите корректный email
+    </div>
+    <br>
+
+    <label>Тема</label><br>
+    <input type="text"
+           id="subject"
+           name="subject"
+           maxlength="100">
+    <br>
+
+    <label>Сообщение*</label><br>
+    <textarea id="message"
+              name="message"
+              required
+              minlength="10"></textarea>
+    <div id="messageError" class="error">
+        Сообщение должно содержать не меньше 10 символов.
+    </div>
+    <br>
+
+    <button type="submit" id="submitBtn">Submit</button>
+
+    <p id="successMessage" class="success">
+        Ваше сообщение успешно доставлено!
+    </p>
+
+</form>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    let isValid = true;
+
+    let name = document.getElementById("name");
+    let email = document.getElementById("email");
+    let message = document.getElementById("message");
+
+    let nameError = document.getElementById("nameError");
+    let emailError = document.getElementById("emailError");
+    let messageError = document.getElementById("messageError");
+    let success = document.getElementById("successMessage");
+
+    nameError.style.display = "none";
+    emailError.style.display = "none";
+    messageError.style.display = "none";
+    success.style.display = "none";
+
+    if (!name.checkValidity()) {
+        nameError.style.display = "block";
+        isValid = false;
+    }
+
+    if (!email.checkValidity()) {
+        emailError.style.display = "block";
+        isValid = false;
+    }
+
+    if (!message.checkValidity()) {
+        messageError.style.display = "block";
+        isValid = false;
+    }
+
+    if (isValid) {
+        success.style.display = "block";
+        document.getElementById("contactForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>
