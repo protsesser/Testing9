@@ -6,13 +6,21 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from pages.contact_page import ContactPage
 
-
 @pytest.fixture
 def driver():
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new") 
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--remote-allow-origins=*") 
+
     driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install())
+        service=Service(ChromeDriverManager().install()),
+        options=chrome_options
     )
-    driver.maximize_window()
+    driver.set_window_size(1920, 1080)
+
     yield driver
     driver.quit()
 
